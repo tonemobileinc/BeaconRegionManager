@@ -140,6 +140,7 @@ typedef NS_ENUM(NSUInteger, BRMFrameType) {
 - (void)didUpdateExitUIDBeacon:(BRMEddystoneUIDBeacon *)brmUIDBeacon;
 - (void)didUpdateExitURLBeacon:(BRMEddystoneURLBeacon *)brmURLBeacon;
 - (void)didUpdateExitTLMBeacon:(BRMEddystoneTLMBeacon *)brmTLMBeacon;
+- (void)didUpdateState:(CBCentralManager *)central;
 @end
 
 /**

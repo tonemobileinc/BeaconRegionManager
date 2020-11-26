@@ -537,14 +537,36 @@
 {
     BRMDLog(@"State: %ld", central.state);
     
-    NSArray *services = @[[CBUUID UUIDWithString:kBRMEddystoneServiceID]];
-    
-    NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:CBCentralManagerScanOptionAllowDuplicatesKey];
-    
-    if (_centralManager.state == CBCentralManagerStatePoweredOn) {
-        [_centralManager scanForPeripheralsWithServices:services options:options];
+    if ([_delegate respondsToSelector:@selector(didUpdateState:)]) {
+        [_delegate didUpdateState:central];
     }
+
     
+    switch ( central.state ) {
+        case CBManagerStateUnknown:
+            break;
+        case CBManagerStateResetting:
+            break;
+        case CBManagerStateUnsupported:
+            break;
+        case CBCentralManagerStateUnauthorized:
+            break;
+        case CBManagerStatePoweredOff:
+            break;
+        case CBManagerStatePoweredOn: {
+            
+                NSArray *services = @[[CBUUID UUIDWithString:kBRMEddystoneServiceID]];
+                
+                NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:CBCentralManagerScanOptionAllowDuplicatesKey];
+                
+                if (_centralManager.state == CBCentralManagerStatePoweredOn) {
+                    [_centralManager scanForPeripheralsWithServices:services options:options];
+                }
+
+            }
+            break;
+    }
+
     return;
 }
 
